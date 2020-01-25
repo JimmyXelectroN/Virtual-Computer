@@ -1,0 +1,21 @@
+// Greatman Okonkwo
+// January 24, 2020
+
+ /*
+ * DMux gate:
+ * Implementaion of
+ * a= And (Or (in, sel), Not sel)
+ * b= And (Or (in, sel), sel)
+ */
+
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+
+    PARTS:
+    Not (a=sel, out=notSel);
+    Or (a=in, b=sel, out=orInSelA);
+    And (a=orInSelA, b=notSel, out=a);
+    Or (a=in, b=sel, out=orInSelB);
+    And (a=orInSelB, b=sel, out=b);
+}
