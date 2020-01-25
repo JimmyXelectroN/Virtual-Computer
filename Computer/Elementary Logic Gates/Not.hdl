@@ -1,0 +1,16 @@
+// Greatman Okonkwo
+// Janaury 24, 2020
+
+ /*
+ * Not Gate:
+ * Implemention of
+ * Nand (a, a)
+ */
+
+CHIP Not {
+    IN a;
+    OUT out;
+
+    PARTS:
+    Nand (a=a, b=a, out=out);
+}

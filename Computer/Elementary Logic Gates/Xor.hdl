@@ -1,0 +1,21 @@
+// Greatman Okonkwo
+// January 24, 2020
+
+ /*
+ * Xor gate:
+ * Implementation of
+ * Or (And(Not a, b), And(a, Not b))
+ */
+
+CHIP Xor {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    Not (a=a, out=nota);
+    Not (a=b, out=notb);
+    And (a=nota, b=b, out=w1);
+    And (a=a, b=notb, out=w2);
+    Or (a=w1, b=w2, out=out);
+
+}
