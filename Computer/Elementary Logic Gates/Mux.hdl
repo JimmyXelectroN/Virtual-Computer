@@ -1,0 +1,19 @@
+// Greatman Okonkwo
+// January 24, 2020
+
+ /*
+ * Mux gate:
+ * Implementation of 
+ * And (Or (a,sel), Or (b, Not sel))
+ */
+
+CHIP Mux {
+   IN a, b, sel;
+   OUT out;
+
+   PARTS:
+   Not (a=sel, out=notSel);
+   Or (a=a, b=sel, out=aSel);
+   Or (a=b, b=notSel, out=bSel);
+   And (a=aSel, b=bSel, out=out);
+}
