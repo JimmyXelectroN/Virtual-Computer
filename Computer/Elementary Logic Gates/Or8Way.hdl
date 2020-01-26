@@ -1,11 +1,8 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// File name: projects/01/Or8Way.hdl
+// Greatman Okonkwo
+// January 24, 2020
 
-/**
- * 8-way Or: 
- * out = (in[0] or in[1] or ... or in[7])
+ /*
+ * 8 Way Or logic gate
  */
 
 CHIP Or8Way {
@@ -13,5 +10,4 @@ CHIP Or8Way {
     OUT out;
 
     PARTS:
-    // Put your code here:
-}
+    Or ();
