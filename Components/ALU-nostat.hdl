@@ -1,0 +1,27 @@
+// Greatman Okonkwo
+// February 3, 2020
+
+ /*
+ * Implementation of Arimethic Logical Unit
+ */
+
+CHIP ALU-nostat {
+    IN x[16], y[16], zx, nx, zy, ny, f, no;
+    OUT out[16];
+
+    PARTS:
+    Not16 (in[0..15]=x, out[0..15]=notx);
+    Inc16 (in[0..15]=notx, out[0..15]=compx);
+    Add16 (a[0..15]=x, b[0..15]=compx, out[0..15]=zero);
+    Mux16 (a[0..15]=x, b[0..15]=zero, sel=zx, out[0..15]=x1);
+    Not16 (in[0..15]=x1, out[0..15]=notx1);
+    Mux16 (a[0..15]=x1, b[0..15]=notx1, sel=nx, out[0..15]=x2);
+    Mux16 (a[0..15]=y, b[0..15]=zero, sel=zy, out[0..15]=y1);
+    Not16 (in[0..15]=y1, out[0..15]=noty1);
+    Mux16 (a[0..15]=y1, b[0..15]=noty1, sel=ny, out[0..15]=y2);
+    Add16 (a[0..15]=x2, b[0..15]=y2, out[0..15]=xplusy);
+    And16 (a[0..15]=x2, b[0..15]=y2, out[0..15]=xandy);
+    Mux16 (a[0..15]=xandy, b[0..15]=xplusy, sel=f, out[0..15]=outf);
+    Not16 (in[0..15]=outf, out[0..15]=nf);
+    Mux16 (a[0..15]=outf, b[0..15]=nf, sel=no, out[0..15]=out);
+}

@@ -1,0 +1,15 @@
+// Greatman Okonkwo
+// January 30, 2020
+
+ /*
+ * Implementation of two binary input adder
+ */
+
+CHIP HalfAdder {
+    IN a, b;
+    OUT sum, carry;
+
+    PARTS:
+    And (a=a, b=b, out=carry);
+    Xor (a=a, b=b, out=sum);
+}
