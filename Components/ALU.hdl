@@ -1,4 +1,4 @@
-// Greatman Okonkwo
+// Greatman Okonkw
 // February 3, 2020
 
  /*
@@ -23,12 +23,9 @@ CHIP ALU {
     And16 (a[0..15]=x2, b[0..15]=y2, out[0..15]=xandy);
     Mux16 (a[0..15]=xandy, b[0..15]=xplusy, sel=f, out[0..15]=outf);
     Not16 (in[0..15]=outf, out[0..15]=nf);
-    Mux16 (a[0..15]=outf, b[0..15]=nf, sel=no, out[0..7]=out1);
-    Mux16 (a[0..15]=outf, b[0..15]=nf, sel=no, out[8..15]=out2);
-    Or8Way (in[0..7]=out1, out=or1);
-    Or8Way (in[0..7]=out2, out=or2);
+    Mux16 (a[0..15]=outf, b[0..15]=nf, sel=no, out=out, out[0..7]=zrout1, out[8..15]=zrout2, out[15]=ng);
+    Or8Way (in[0..7]=zrout1, out=or1);
+    Or8Way (in[0..7]=zrout2, out=or2);
     Or (a=or1, b=or2, out=ans);
     Not (a=ans, out=zr);
-    Mux16 (a[0..15]=outf, b[0..15]=nf, sel=no, out[15]=ng);
-    Mux16 (a[0..15]=outf, b[0..15]=nf, sel=no, out[0..15]=out);
 }

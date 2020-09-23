@@ -1,0 +1,39 @@
+// Greatman Okonkwo
+// March 24, 2020
+
+ /*
+ * Implementation of Hack computer's central processing unit
+ */
+
+CHIP CPU {
+    IN inM[16], instruction[16], reset;
+    OUT outM[16], writeM, addressM[15], pc[15];
+
+    PARTS:
+    Mux16 (a=instruction, b=ALUout, sel=instruction[15], out=INa);
+    Mux (a=true, b=instruction[5], sel=instruction[15], out=loadA);
+    ARegister (in=INa, load=loadA, out=outA, out[0..14]=addressM);
+
+    Mux (a=false, b=instruction[4], sel=instruction[15], out=loadD);
+    DRegister (in=ALUout, load=loadD, out=outD);
+
+    Mux16 (a=outA, b=inM, sel=instruction[12], out=ALUy);
+    ALU (x=outD, y=ALUy, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=ALUout, out=outM, zr=zero, ng=neg);
+
+    Mux (a=false, b=instruction[3], sel=instruction[15], out=writeM);
+    
+    Or (a=neg, b=zero, out=ngOrzr);
+    Not (a=ngOrzr, out=notOr);
+    Not (a=neg, out=notNg);
+    Not (a=zero, out=notZr);
+    Mux (a=false, b=notOr, sel=instruction[0], out=m1);
+    Mux (a=zero, b=notNg, sel=instruction[0], out=m2);
+    Mux (a=neg, b=notZr, sel=instruction[0], out=m3);
+    Mux (a=ngOrzr, b=true, sel=instruction[0], out=m4);
+    Mux (a=m1, b=m2, sel=instruction[1], out=m5);
+    Mux (a=m3, b=m4, sel=instruction[1], out=m6);
+    Mux (a=m5, b=m6, sel=instruction[2], out=jump);
+    
+    Mux (a=false, b=jump, sel=instruction[15], out=loadPC);
+    PC (in=outA, inc=true, load=loadPC, reset=reset, out[0..14]=pc);
+}

@@ -1,0 +1,19 @@
+// Greatman Okonkwo
+// February 8, 2020
+
+ /*
+ * Implementation of 16K register RAM
+ */
+
+CHIP RAM16K {
+    IN in[16], address[14], load;
+    OUT out[16];
+
+    PARTS:
+    DMux4Way (in=load, sel=address[12..13], a=loadram1, b=loadram2, c=loadram3, d=loadram4);
+    RAM4K (in=in, address=address[0..11], load=loadram1, out=r1);
+    RAM4K (in=in, address=address[0..11], load=loadram2, out=r2);
+    RAM4K (in=in, address=address[0..11], load=loadram3, out=r3);
+    RAM4K (in=in, address=address[0..11], load=loadram4, out=r4);
+    Mux4Way16 (a=r1, b=r2, c=r3, d=r4, sel=address[12..13], out=out);
+}

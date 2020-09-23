@@ -1,0 +1,22 @@
+// Greatman Okonkwo
+// March 16, 2020
+
+ /*
+ * Implementation of counter chip
+ */
+
+CHIP PC {
+    IN in[16], inc, load, reset;
+    OUT out[16];
+
+    PARTS:
+    Mux16 (a=plusOne, b=in, sel=load, out=val1);
+    Not16(in=val1, out=notval);
+    Inc16 (in=notval, out=incval);
+    Add16 (a=incval, b=val1, out=zero);
+    Mux16 (a=val1, b=zero, sel=reset, out=val2);
+    Or (a=reset, b=load, out=or1);
+    Or (a=inc, b=or1, out=loadReg);
+    Register (in=val2, load=loadReg, out=out, out=out2);
+    Inc16 (in=out2, out=plusOne);
+}

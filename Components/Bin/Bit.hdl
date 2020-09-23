@@ -1,0 +1,15 @@
+// Greatman Okonkwo
+// February 8, 2020
+
+ /*
+ * Implementation of one bit register that remembers information 'forever'
+ */
+
+CHIP Bit {
+    IN in, load;
+    OUT out;
+
+    PARTS:
+    Mux (a=dffout, b=in, sel=load, out=sBit);
+    DFF (in=sBit, out=out, out=dffout);
+}

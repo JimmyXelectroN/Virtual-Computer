@@ -1,0 +1,18 @@
+// Greatman Okonkwo
+// March 24, 2020
+ /*
+ * Complete Memory address space: 16K RAM, SCREEN, KEYBOARD
+ */
+
+CHIP Memory {
+    IN in[16], address[15], load;
+    OUT out[16];
+
+    PARTS:
+    DMux (in=load, sel=address[14], a=load16K, b=loadSCRN); // Routes load status to memory map or RAM, depending on value of 15th bit in addresss
+    RAM16K (in=in, address=address[0..13], load=load16K, out=out16K);
+    Screen (in=in, load=loadSCRN, address=address[0..12], out=outSCRN);
+    Keyboard (out=outKBD);
+    Mux16 (a=outSCRN, b=outKBD, sel=address[13], out=outMM); // selects between screen or keyboard output 
+    Mux16 (a=out16K, b=outMM, sel=address[14], out=out); //  selects between RAM or memeory map output
+}

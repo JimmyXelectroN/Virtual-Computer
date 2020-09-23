@@ -1,0 +1,23 @@
+// Greatman Okonkwo
+// February 8, 2020
+
+ /*
+ * Implementation of 64 register RAM
+ */
+
+CHIP RAM64{
+    IN in[16], address[6], load;
+    OUT out[16];
+
+    PARTS:
+    DMux8Way (in=load, sel=address[3..5], a=loadram1, b=loadram2, c=loadram3, d=loadram4, e=loadram5, f=loadram6, g=loadram7, h=loadram8);
+    RAM8 (in=in, address=address[0..2], load=loadram1, out=r1);
+    RAM8 (in=in, address=address[0..2], load=loadram2, out=r2);
+    RAM8 (in=in, address=address[0..2], load=loadram3, out=r3);
+    RAM8 (in=in, address=address[0..2], load=loadram4, out=r4);
+    RAM8 (in=in, address=address[0..2], load=loadram5, out=r5);
+    RAM8 (in=in, address=address[0..2], load=loadram6, out=r6);
+    RAM8 (in=in, address=address[0..2], load=loadram7, out=r7);
+    RAM8 (in=in, address=address[0..2], load=loadram8, out=r8);
+    Mux8Way16 (a=r1, b=r2, c=r3, d=r4, e=r5, f=r6, g=r7, h=r8, sel=address[3..5], out=out);
+}

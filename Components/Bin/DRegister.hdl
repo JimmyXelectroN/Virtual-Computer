@@ -1,0 +1,14 @@
+// Greatman Okonkwo
+// March 25, 2020
+
+ /*
+ * Implemention of D register
+ */
+
+CHIP DRegister {
+    IN in[16], load;
+    OUT out[16];
+
+    PARTS:
+    Register (in=in, load=load, out=out);
+}
